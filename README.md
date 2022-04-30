@@ -1,3 +1,5 @@
+Updated to support SET Amps on registry 4005 for CT1 Amps
+
 # Eastron setuptool
 Minimalistic setuptool for the Eastron sdm120 wattmeter.
 Its primary usecase is the setup of the ID and the baudrate.
@@ -25,3 +27,6 @@ Set the Baudrate to 9600 of meter with ID==2\
 
 Set meterID to 42 of meter with currentID==2\
 `./setuptool.py --serialBaudRate=9600 --meterID=2 --setMeterID=42`
+
+Set AMPS to 60 amps instead of defautl 5 Amps\
+`./setuptool.py --CT1=60`
