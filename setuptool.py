@@ -4,7 +4,7 @@ import minimalmodbus
 import serial
 import argparse
 
-__author__ = "Nick Ma"
+__author__ = "Nick Ma updated by EO"
 
 
 def parseCmdLineArguments():
