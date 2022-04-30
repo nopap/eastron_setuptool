@@ -29,4 +29,4 @@ Set meterID to 42 of meter with currentID==2\
 `./setuptool.py --serialBaudRate=9600 --meterID=2 --setMeterID=42`
 
 Set AMPS to 60 amps instead of defautl 5 Amps\
-`./setuptool.py --CT1=60`
+`./setuptool.py --setCT1=60`
