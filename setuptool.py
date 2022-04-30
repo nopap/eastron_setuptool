@@ -11,7 +11,7 @@ def parseCmdLineArguments():
     parser = argparse.ArgumentParser(description='Eastron SDM120 setup tool')
 
     # prepare valid argc/argv arguments
-    parser.add_argument('--port', default="/dev/ttyUSB0",
+    parser.add_argument('--port', default="/dev/ttyUSB_SDM120_house",
                         help='port where the serial RS485 dongle is connected')
     parser.add_argument('--serialBaudRate', default=2400, type=int, choices={1200, 2400, 4800, 9600})
     parser.add_argument('--meterID', default=1, type=int)
@@ -21,6 +21,8 @@ def parseCmdLineArguments():
     group.add_argument('--setMeterID', type=int, choices=range(1, 248))
     group.add_argument('--setBaudrate', type=int, choices={0, 1, 2, 5},
                         help="0:2400bps(default), 1:4800bps, 2:9600bps, 5:1200bps")
+    group.add_argument('--setCT1', type=int, choices={5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60},
+                        help="5:5Amps(default), 10:10Amps, ...60:60Amps")
     return parser.parse_args()
 
 
@@ -34,7 +36,8 @@ class SDM120(minimalmodbus.Instrument):
     # holding registers
     HOLDING_METER_ID     = 0x0014
     HOLDING_METER_BAUDRATE = 0x001C
-
+    HOLDING_CT1 = 0x0032
+    
     def __init__(self, portname, slaveaddress=1, baudrate=2400):
         minimalmodbus.Instrument.__init__(self, portname, slaveaddress)
 
@@ -95,3 +98,12 @@ if __name__ == '__main__':
         print("OLD device id: %d, setting it to: %d" % (current_meter_id, args.setMeterID))
         n.write_holding(n.HOLDING_METER_ID, args.setMeterID)
         # TODO set n.address=args.setMeterID *after* the successful write
+    if args.setCT1 is not None:
+        current_amps = n.read_holding(n.HOLDING_CT1)
+        if args.setCT1 == 60:
+            new_amps = 0x42700000
+        if new_amps:
+            print("OLD device CT1 Amps: %d, setting it to: %d" % (current_amps, new_amps))
+            n.write_holding(n.HOLDING_CT1, new_amps)
+        else:
+            print("No proper amps value")
