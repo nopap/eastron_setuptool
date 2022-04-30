@@ -106,4 +106,5 @@ if __name__ == '__main__':
             print("OLD device CT1 Amps: %d, setting it to: %d" % (current_amps, new_amps))
             n.write_holding(n.HOLDING_CT1, new_amps)
         else:
-            print("No proper amps value")
+            print("OLD device CT1 Amps: %d" % (current_amps))
+            print("No proper new_amps value")
