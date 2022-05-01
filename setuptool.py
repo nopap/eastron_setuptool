@@ -47,10 +47,13 @@ class SDM120(minimalmodbus.Instrument):
         self.serial.timeout = 1.0  # timeout to 1000ms because I discovered roundtrip times as high as 898.5 ms
 
         self.mode = minimalmodbus.MODE_RTU
+        print("Init ok")
 
     def is_device_sane(self):
         self.debug = True
+        print("is_device_sane 1")
         voltage = self.read_float(self.REG_VOLTAGE, functioncode=4)
+        print("is_device_sane 2 readfloat")
         self.debug = False
 
         voltage_sane = 100 < voltage < 250
