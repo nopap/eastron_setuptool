@@ -42,7 +42,7 @@ class SDM120(minimalmodbus.Instrument):
         minimalmodbus.Instrument.__init__(self, portname, slaveaddress)
 
         # setup the serial connection
-        self.serial.baudrate = int(baudrate)
+        self.serial.baudrate = 2400 #int(baudrate)
         self.serial.parity = serial.PARITY_NONE
         self.serial.timeout = 1.0  # timeout to 1000ms because I discovered roundtrip times as high as 898.5 ms
 
